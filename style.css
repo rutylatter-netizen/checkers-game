@@ -288,6 +288,7 @@ input:focus {
   opacity: 0.7;
   box-shadow: 0 0 12px var(--orange);
   animation: pulse 1.2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .square.valid-capture::after {
@@ -299,6 +300,18 @@ input:focus {
   border: 3px dashed var(--orange);
   box-shadow: 0 0 12px var(--orange);
   animation: pulse 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* כלי יריב שניתן לאכול אותו */
+.square.can-be-captured .piece {
+  box-shadow: 0 0 0 4px #ff2222, 0 0 20px rgba(255, 34, 34, 0.7);
+  animation: danger-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes danger-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px #ff2222, 0 0 12px rgba(255, 34, 34, 0.5); }
+  50% { box-shadow: 0 0 0 6px #ff2222, 0 0 24px rgba(255, 34, 34, 0.9); }
 }
 
 @keyframes pulse {

@@ -238,12 +238,26 @@
     if (state.gameOver) return;
     const piece = state.board[row][col];
 
-    // אם לחצנו על משבצת תקפה למעבר
     if (state.selected) {
+      // לחיצה על משבצת יעד ישירה
       const target = state.validMoves.find(m => m.row === row && m.col === col);
       if (target) {
         executeMove(state.selected.row, state.selected.col, target);
         return;
+      }
+
+      // לחיצה על כלי יריב - ביצוע אכילה אוטומטית
+      if (piece && piece.color !== state.currentPlayer) {
+        const captureMoves = state.validMoves.filter(m =>
+          m.captures.some(cap => cap.row === row && cap.col === col)
+        );
+        if (captureMoves.length === 1) {
+          executeMove(state.selected.row, state.selected.col, captureMoves[0]);
+          return;
+        } else if (captureMoves.length > 1) {
+          showStatus('יש כמה מסלולי אכילה - לחץ על המשבצת הריקה שאחרי הכלי');
+          return;
+        }
       }
     }
 
@@ -366,6 +380,11 @@
     const moveSet = new Set(
       state.validMoves.map(m => `${m.row},${m.col}:${m.captures.length > 0 ? 'cap' : 'move'}`)
     );
+    // כלים שניתן לאכול כרגע (מסומנים באדום)
+    const capturableSet = new Set();
+    for (const m of state.validMoves) {
+      for (const cap of m.captures) capturableSet.add(`${cap.row},${cap.col}`);
+    }
 
     for (let r = 0; r < BOARD_SIZE; r++) {
       for (let c = 0; c < BOARD_SIZE; c++) {
@@ -382,6 +401,8 @@
         const moveOnly = moveSet.has(`${r},${c}:move`);
         if (moveCap) sq.classList.add('valid-capture');
         else if (moveOnly) sq.classList.add('valid-move');
+
+        if (capturableSet.has(`${r},${c}`)) sq.classList.add('can-be-captured');
 
         const piece = state.board[r][c];
         if (piece) {
