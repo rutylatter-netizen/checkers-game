@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמקה - שחור נגד כתום</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- מסך כניסה -->
+  <section id="login-screen" class="screen active">
+    <div class="login-card">
+      <h1>דמקה</h1>
+      <p class="subtitle">שחור נגד כתום</p>
+
+      <form id="login-form" autocomplete="off">
+        <fieldset>
+          <legend><span class="dot dot-black"></span> שחקן 1 — שחור</legend>
+          <label>
+            שם משתמש
+            <input type="text" id="user1" required minlength="2" maxlength="20" />
+          </label>
+          <label>
+            סיסמא
+            <input type="password" id="pass1" required minlength="4" maxlength="30" />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="dot dot-orange"></span> שחקן 2 — כתום</legend>
+          <label>
+            שם משתמש
+            <input type="text" id="user2" required minlength="2" maxlength="20" />
+          </label>
+          <label>
+            סיסמא
+            <input type="password" id="pass2" required minlength="4" maxlength="30" />
+          </label>
+        </fieldset>
+
+        <p id="login-error" class="error" hidden></p>
+        <button type="submit" class="btn-primary">התחל משחק</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- מסך משחק -->
+  <section id="game-screen" class="screen">
+    <header class="game-header">
+      <div class="player player-black" id="player1-card">
+        <span class="dot dot-black"></span>
+        <span class="player-name" id="player1-name">שחקן 1</span>
+        <span class="player-pieces" id="player1-pieces">12</span>
+      </div>
+
+      <div class="turn-info">
+        <div id="turn-text">תור של:</div>
+        <div id="current-player">—</div>
+      </div>
+
+      <div class="player player-orange" id="player2-card">
+        <span class="dot dot-orange"></span>
+        <span class="player-name" id="player2-name">שחקן 2</span>
+        <span class="player-pieces" id="player2-pieces">12</span>
+      </div>
+    </header>
+
+    <div class="board-wrapper">
+      <div id="board" class="board"></div>
+    </div>
+
+    <div class="game-controls">
+      <button id="new-game-btn" class="btn-secondary">משחק חדש</button>
+      <button id="logout-btn" class="btn-secondary">החלף שחקנים</button>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+  </section>
+
+  <!-- מסך ניצחון -->
+  <div id="win-modal" class="modal" hidden>
+    <div class="modal-content">
+      <h2 id="win-title">ניצחון!</h2>
+      <p id="win-text"></p>
+      <button id="win-new-game" class="btn-primary">משחק חדש</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
